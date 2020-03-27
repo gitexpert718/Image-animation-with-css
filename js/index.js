@@ -66,7 +66,7 @@ function init() {
     rotate_right("YING_YANG", 2);
     document.getElementById("MOUTH_OPEN_div").style.visibility = 'hidden'; 
 
-    document.getElementById("parent_div").style.zoom = '130%'; 
+    document.getElementById("parent_div").style.zoom = '140%'; 
 
     create_smiley();
     
@@ -153,7 +153,7 @@ $('body').click(function(){
     audioplay("OpeningSphere");
     assign_smiley()
     clearInterval(moving_creature);
-    var flag = 0;
+    var flag = 0, flag_background = 0;
     var inverse = setInterval(function() {
         if(flag % 2 === 0){
             document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'hidden';
@@ -164,34 +164,106 @@ $('body').click(function(){
             document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'hidden';
             flag += 1;
         }
-        if(flag > 5) {
+        if(flag > 7) {
             document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'hidden';
             document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'visible';
             clearInterval(inverse);
             return;
         }   
     }, 1000 / 1.2 );
+    var backcolor_change = setInterval(function() {
+        if(flag_background > 5) {
+            clearInterval(backcolor_change);
+            $('#body').addClass("dark0");
+            $('#body').removeClass("dark1");
+            $('#body').removeClass("dark2");
+            $('#body').removeClass("dark3");
+            $('#body').removeClass("dark4");
+            $('#body').removeClass("dark5");
+            flag_background = 0;
+            return;
+        } 
+        flag_background += 1; 
+        switch (flag_background % 6) {
+            case 0:
+                $('#body').addClass("dark0");
+                $('#body').removeClass("dark1");
+                $('#body').removeClass("dark2");
+                $('#body').removeClass("dark3");
+                $('#body').removeClass("dark4");
+                $('#body').removeClass("dark5");
+                break;
+            case 1:
+                $('#body').removeClass("dark0");
+                $('#body').addClass("dark1");
+                $('#body').removeClass("dark2");
+                $('#body').removeClass("dark3");
+                $('#body').removeClass("dark4");
+                $('#body').removeClass("dark5");
+                break;
+            case 2:
+                $('#body').removeClass("dark0");
+                $('#body').removeClass("dark1");
+                $('#body').addClass("dark2");
+                $('#body').removeClass("dark3");
+                $('#body').removeClass("dark4");
+                $('#body').removeClass("dark5");
+                break;
+            case 3:
+                $('#body').removeClass("dark0");
+                $('#body').removeClass("dark1");
+                $('#body').removeClass("dark2");
+                $('#body').addClass("dark3");
+                $('#body').removeClass("dark4");
+                $('#body').removeClass("dark5");
+                break;
+            case 4:
+                $('#body').removeClass("dark0");
+                $('#body').removeClass("dark1");
+                $('#body').removeClass("dark2");
+                $('#body').removeClass("dark3");
+                $('#body').addClass("dark4");
+                $('#body').removeClass("dark5");
+                break;
+            case 5:
+                $('#body').removeClass("dark0");
+                $('#body').removeClass("dark1");
+                $('#body').removeClass("dark2");
+                $('#body').removeClass("dark3");
+                $('#body').removeClass("dark4");
+                $('#body').addClass("dark5");
+                break;
+        }
+    }, 1000 / 1.2 );
     document.getElementById("MOUTH_div").style.visibility = 'hidden';
     document.getElementById("MOUTH_OPEN_div").style.visibility = 'visible';
     document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'visible';
     setposition("nose_WIFI_div", 88, 95);
     var h = 0, h2 = 70;
-    var moving = setInterval(function() {
+    var opening = setInterval(function() {
         if(h < -70) {
-            clearInterval(moving);
+            clearInterval(opening);
+            // fall_smiley(); 
             setTimeout(function(){
-                setposition("HalfSphereGREY_div", 0, 0); 
-                setposition("HalfSphereGREEN_div", 0, 70);
-                setposition("nose_WIFI_div", 88, 109);   
-                document.getElementById("MOUTH_div").style.visibility = 'visible';
-                document.getElementById("MOUTH_OPEN_div").style.visibility = 'hidden';
                 audioplay("ClosingSphere"); 
-                // modify
-                move_creature(); 
-                fall_smiley(); 
-            },2000);
-            h = 0;
-            h2 = 70;
+                var closing = setInterval(function() {
+                    if(h > 0) {
+                        clearInterval(closing);
+                        setposition("nose_WIFI_div", 88, 109);
+                        document.getElementById("MOUTH_div").style.visibility = 'visible';
+                        document.getElementById("MOUTH_OPEN_div").style.visibility = 'hidden';
+                        move_creature(); 
+                        fall_smiley(); 
+                        return;
+                    }
+                    h += 2.4;
+                    h2 -= 1;
+                    setposition("HalfSphereGREY_div", 0, h);
+                    setposition("HalfSphereGREEN_div", 0, h2);                 
+                    // audioplay("ClosingSphere"); 
+                    // modify               
+                }, 40);
+            }, 2000);            
             return;   
         }      
         h -= 1.2;

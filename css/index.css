@@ -5,15 +5,28 @@ html, body {
     height: 100%;
 }
 
-html.dark, body.dark {
+html.dark0, body.dark0 {
     background: #000000;
-    background: -moz-radial-gradient(center, ellipse cover,  #000000 0%, #000000 40%, #000000 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#000000), color-stop(40%,#000000), color-stop(100%,#000000));
-    background: -webkit-radial-gradient(center, ellipse cover,  #000000 0%,#000000 40%,#000000 100%);
-    background: -o-radial-gradient(center, ellipse cover,  #000000 0%,#000000 40%,#000000 100%);
-    background: -ms-radial-gradient(center, ellipse cover,  #000000 0%,#000000 40%,#000000 100%);
-    background: radial-gradient(ellipse at center,  #000000 0%,#000000 40%,#000000 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#283442', endColorstr='#000d19',GradientType=1 );
+}
+
+html.dark1, body.dark2 {
+    background: red;
+}
+
+html.dark2, body.dark4 {
+    background: cyan;
+}
+
+html.dark3, body.dark5 {
+    background: greenyellow;
+}
+
+html.dark4, body.dark3 {
+    background: yellow;
+}
+
+html.dark5, body.dark1 {
+    background: blue;
 }
 
 #container {
