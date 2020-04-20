@@ -97,6 +97,8 @@ function init() {
     create_object();
     document.getElementById("object_div").style.visibility = 'hidden';
     document.getElementById("object_div").style.zoom = "80%";
+    create_fish();
+    document.getElementById("fish_div").style.visibility = 'hidden';
     
     //modify
     move_creature("parent_div");
@@ -237,6 +239,28 @@ function create_object() {
     setposition("smallman", 74, 80);
 }
 
+function create_fish() {
+    creatediv("fish", "HalfSphereGREEN_div", 145, 180, 100, 5);
+    setposition("fish_div", 47, -68);
+
+    creatediv("FISH_body", "fish_div", 100, 180, 100, 5);
+    setposition("FISH_body_div", 0, 0);
+    loadimg("FISH_body", 100, 180, "absolute", "FISH_body_div", -1, "fish/");
+    setposition("FISH_body", 0, 0);
+
+    creatediv("FISH_LEG1", "fish_div", 0, 0, 100, 5);
+    setposition("FISH_LEG1_div", 80, 38);
+    loadimg_index("FISH_LEG", 150, 90, "absolute", "FISH_LEG1_div", -1, "fish/", 100);
+    setposition("FISH_LEG100", -75, -29);
+    $('#FISH_LEG1_div').addClass('manrightleg');
+
+    creatediv("FISH_LEG2", "fish_div", 0, 0, 100, 5);
+    setposition("FISH_LEG2_div", 80, 38);
+    loadimg_index("FISH_LEG", 150, 90, "absolute", "FISH_LEG2_div", -1, "fish/", 200);
+    setposition("FISH_LEG200", -75, -29);
+    $('#FISH_LEG2_div').addClass('manleftleg');
+}
+
 function assign_smiley() {
     var cnt_smile = 1;
     while(cnt_smile < 6) {        
@@ -277,7 +301,7 @@ function stop_left(id, num) {
 ////////////////////////////////////////////////////////
 
 $('#parent_div').click(function(){
-    switch (stage % 5) {
+    switch (stage % 6) {
         case 1:
             for (var i = 1; i < 6; i++) {
                 document.getElementById("smiley" + i + "_div").style.visibility = 'visible';
@@ -287,6 +311,7 @@ $('#parent_div').click(function(){
             document.getElementById("hand_sphere").style.visibility = 'hidden';
             document.getElementById("flowerpiece_div").style.visibility = 'hidden';
             document.getElementById("object_div").style.visibility = 'hidden';
+            document.getElementById("fish_div").style.visibility = 'hidden';
             break;
         case 2:
             for (var i = 1; i < 6; i++) {
@@ -299,6 +324,7 @@ $('#parent_div').click(function(){
             document.getElementById("hand_sphere").style.visibility = 'hidden';
             document.getElementById("flowerpiece_div").style.visibility = 'hidden';
             document.getElementById("object_div").style.visibility = 'hidden';
+            document.getElementById("fish_div").style.visibility = 'hidden';
             break;
         case 3:
             for (var i = 1; i < 6; i++) {
@@ -309,6 +335,7 @@ $('#parent_div').click(function(){
             document.getElementById("hand_sphere").style.visibility = 'visible';
             document.getElementById("flowerpiece_div").style.visibility = 'hidden';
             document.getElementById("object_div").style.visibility = 'hidden';
+            document.getElementById("fish_div").style.visibility = 'hidden';
             break;
         case 4:
             for (var i = 1; i < 6; i++) {
@@ -319,8 +346,9 @@ $('#parent_div').click(function(){
             document.getElementById("hand_sphere").style.visibility = 'hidden';
             document.getElementById("flowerpiece_div").style.visibility = 'visible'; 
             document.getElementById("object_div").style.visibility = 'hidden';
+            document.getElementById("fish_div").style.visibility = 'hidden';
             break;
-        case 0:
+        case 5:
             for (var i = 1; i < 6; i++) {
                 document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
             }
@@ -332,6 +360,22 @@ $('#parent_div').click(function(){
             document.getElementById("rotate_fan_div").style.visibility = 'hidden';
             setTimeout(function() {
                 document.getElementById("rotate_fan_div").style.visibility = 'visible';
+            }, 1500);
+            document.getElementById("fish_div").style.visibility = 'hidden';
+            break;
+        case 0:
+            for (var i = 1; i < 6; i++) {
+                document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
+            }
+            document.getElementById("wingman_div").style.visibility = 'hidden';
+            document.getElementById("Hand").style.visibility = 'hidden';
+            document.getElementById("hand_sphere").style.visibility = 'hidden';
+            document.getElementById("flowerpiece_div").style.visibility = 'hidden'; 
+            document.getElementById("object_div").style.visibility = 'hidden';
+            document.getElementById("fish_div").style.visibility = 'visible';
+            document.getElementById("FISH_body_div").style.visibility = 'hidden';
+            setTimeout(function() {
+                document.getElementById("FISH_body_div").style.visibility = 'visible';
             }, 1500);
             break;
     }
@@ -457,26 +501,30 @@ $('#parent_div').click(function(){
             clearInterval(opening);
             // fall_smiley();             
             setTimeout(function(){
-                if (stage % 5 === 1) {
+                if (stage % 6 === 1) {
                     for (var i = 1; i < 6; i++) {
                         document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
                     }
                     fall_smiley(); 
-                } else if (stage % 5 === 2) {
+                } else if (stage % 6 === 2) {
                     document.getElementById("wingman_div").style.visibility = 'hidden'; 
                     document.getElementById("wing_right_div").style.visibility = 'hidden'; 
                     document.getElementById("wing_left_div").style.visibility = 'hidden'; 
                     fall_wingman(); 
-                } else if (stage % 5 === 3) {
+                } else if (stage % 6 === 3) {
                     document.getElementById("hand_sphere").style.visibility = 'hidden';
                     fall_handpiece();
-                } else if (stage % 5 === 4) {
+                } else if (stage % 6 === 4) {
                     document.getElementById("flowerpiece_div").style.visibility = 'hidden';
                     fall_flowerpiece();
-                } else {
+                } else if (stage % 6 == 5) {
                     document.getElementById("object_div").style.visibility = 'hidden';
                     document.getElementById("rotate_fan_div").style.visibility = 'hidden';
                     fall_object();
+                } else {
+                    document.getElementById("fish_div").style.visibility = 'hidden';
+                    document.getElementById("FISH_body_div").style.visibility = 'hidden';
+                    fall_fish();
                 }
                 setTimeout(function() {
                     audioplay("ClosingSphere"); 
@@ -501,7 +549,7 @@ $('#parent_div').click(function(){
             }, 2000);            
             return;   
         }
-        if(stage % 5 === 2 && h < -60) {
+        if(stage % 6 === 2 && h < -60) {
             document.getElementById("wing_right_div").style.visibility = 'visible'; 
             document.getElementById("wing_left_div").style.visibility = 'visible'; 
         }      
@@ -784,13 +832,65 @@ function fall_object() {
     creatediv("fall_smallman" + fall_object_index, "container", 45, 20, 100, 5);
     setposition("fall_smallman" + fall_object_index + "_div", object_x + 25, object_y + 25);
     loadimg_index("man_up", 20, 20, "absolute", "fall_smallman" + fall_object_index + "_div", -1, "objects/", fall_object_index);
-    setposition("man_up" + fall_object_index, 0, 0);
+    setposition("man_up" + fall_object_index, 0, 4);
+
+    creatediv("Manleftleg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 100, 5);
+    setposition("Manleftleg" + fall_object_index + "_div", 10, 20);
+    loadimg_index("Manleftleg", 25, 20, "absolute", "Manleftleg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("Manleftleg" + fall_object_index, -15, 0);
+
+    creatediv("ManRightLeg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 100, 5);
+    setposition("ManRightLeg" + fall_object_index + "_div", 11, 20);
+    loadimg_index("ManRightLeg", 25, 20, "absolute", "ManRightLeg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("ManRightLeg" + fall_object_index, -5, 0);
 
     falling_object("fall_pyramid" + fall_object_index + "_div", object_x - 50, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
     falling_object("fall_apple" + fall_object_index + "_div", object_x + 100, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
-    falling_object("fall_smallman" + fall_object_index + "_div", object_x + 25, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
+    falling_object("fall_smallman" + fall_object_index + "_div", object_x + 45, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
 
     fall_object_index += 1;
+}
+
+var fall_fish_index = 1;
+function fall_fish() {
+    var fish_x = x0 * 1.2;
+    var fish_y = y0 * 1.2;
+
+    creatediv("fall_fishpiece" + fall_fish_index, "container", 200, 270, 100, 5);
+    setposition("fall_fishpiece" + fall_fish_index + "_div", fish_x, fish_y);
+
+    creatediv("fall_FISH_body" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 145, 270, 100, 5);
+    setposition("fall_FISH_body" + fall_fish_index + "_div", 0, 0);
+    loadimg("FISH_body", 145, 270, "absolute", "fall_FISH_body" + fall_fish_index + "_div", -1, "fish/");
+
+    creatediv("fall_fish_leg1" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 0, 0, 100, 5);
+    setposition("fall_fish_leg1" + fall_fish_index + "_div", 105, 60);
+    loadimg_index("FISH_LEG", 215, 134, "absolute", "fall_fish_leg1" + fall_fish_index + "_div", -1, "fish/", "_left" + fall_fish_index);
+    setposition("FISH_LEG_left" + fall_fish_index, -110, -47);
+    $("#fall_fish_leg1" + fall_fish_index + "_div").addClass("manrightleg");
+
+    creatediv("fall_fish_leg2" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 0, 0, 100, 5);
+    setposition("fall_fish_leg2" + fall_fish_index + "_div", 105, 60);
+    loadimg_index("FISH_LEG", 215, 134, "absolute", "fall_fish_leg2" + fall_fish_index + "_div", -1, "fish/", "_right" + fall_fish_index);
+    setposition("FISH_LEG_right" + fall_fish_index, -110, -47);
+    $("#fall_fish_leg2" + fall_fish_index + "_div").addClass("manleftleg");
+
+    falling_fish("fall_fishpiece" + fall_fish_index + "_div", fish_x, fish_y, fall_fish_index);
+
+    fall_fish_index += 1;
+
+}
+
+function falling_fish(fish_id, x, y, index) {
+    let dy = Math.random() + 0.5;
+    let falling_fisher = setInterval(function() {
+        if ($('#' + fish_id).position().top > $('#container').height() - $('#' + fish_id).height()) {
+            clearInterval(falling_fisher);
+            audioplay("Fishmanwalking");
+        }
+        y += dy;
+        setposition(fish_id, x, y);
+    }, 10);
 }
 
 function falling_object(objects_id, x, y, dy, index) {
@@ -818,6 +918,36 @@ function falling_object(objects_id, x, y, dy, index) {
                         setposition(objects_id, x, y);
                     }
                 });
+                $("#ManRightLeg" + index + "_div").addClass("manrightleg");
+                $("#Manleftleg" + index + "_div").addClass("manleftleg");
+                var dirkey = 1, speed = 1;
+                setInterval(function() {
+                    var dx = 0;
+                    if(dirkey === 1) {
+                        if(index % 2 === 0 && x < $('#container').width() - $("#" + objects_id).width()) {
+                            dx = speed * 0.1;
+                        }
+                        else if(index % 2 === 1 && x > 0) {
+                            dx = -speed * 0.1;
+                        }
+                        else {
+                            dirkey = -1;
+                        }
+                    }
+                    if(dirkey === -1) {
+                        if(index % 2 === 1 && x < $('#container').width() - $("#" + objects_id).width()) {
+                            dx = speed * 0.1;
+                        }
+                        else if(index % 2 === 0 && x > 0) {
+                            dx = -speed * 0.1;
+                        }
+                        else {
+                            dirkey = 1;
+                        }
+                    }
+                    x += dx;
+                    setposition(objects_id, x, y);
+                }, 10);
             }         
         }
         y += dy;
