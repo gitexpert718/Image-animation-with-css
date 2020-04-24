@@ -1,7 +1,7 @@
 var x0 = $('#container').width()/2;
 var y0 = $('#container').height()/2;
 var smile_index = 1;
-var stage = 1;
+var stage = 1, total_stage = 7;
 // console.log(x0, y0);
 
 init();
@@ -86,6 +86,9 @@ function init() {
     }    
 
     create_smiley();
+    for (var i = 1; i < 6; i++) {
+        document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
+    }
     create_wingman();
     document.getElementById("wingman_div").style.visibility = 'hidden';
     create_handpiece();
@@ -99,6 +102,8 @@ function init() {
     document.getElementById("object_div").style.zoom = "80%";
     create_fish();
     document.getElementById("fish_div").style.visibility = 'hidden';
+    create_elephant();
+    // document.getElementById("elephant_div").style.visibility = 'hidden';
     
     //modify
     move_creature("parent_div");
@@ -261,6 +266,13 @@ function create_fish() {
     $('#FISH_LEG2_div').addClass('manleftleg');
 }
 
+function create_elephant() {
+    creatediv("elephant", "HalfSphereGREEN_div", 130, 160, 100, 5);
+    setposition("elephant_div", 37, -62);
+    loadimg("eleph_all", 130, 160, "absolute", "elephant_div", -1, "elephant/");
+    setposition("eleph_all", 0, 0);
+}
+
 function assign_smiley() {
     var cnt_smile = 1;
     while(cnt_smile < 6) {        
@@ -300,9 +312,14 @@ function stop_left(id, num) {
 
 ////////////////////////////////////////////////////////
 
+let open_key = 0;
+
 $('#parent_div').click(function(){
-    switch (stage % 6) {
-        case 1:
+    if(open_key === 1) {
+        return;
+    }
+    switch (stage % total_stage) {
+        case 0:
             for (var i = 1; i < 6; i++) {
                 document.getElementById("smiley" + i + "_div").style.visibility = 'visible';
             }
@@ -312,6 +329,7 @@ $('#parent_div').click(function(){
             document.getElementById("flowerpiece_div").style.visibility = 'hidden';
             document.getElementById("object_div").style.visibility = 'hidden';
             document.getElementById("fish_div").style.visibility = 'hidden';
+            document.getElementById("elephant_div").style.visibility = 'hidden';
             break;
         case 2:
             for (var i = 1; i < 6; i++) {
@@ -325,6 +343,7 @@ $('#parent_div').click(function(){
             document.getElementById("flowerpiece_div").style.visibility = 'hidden';
             document.getElementById("object_div").style.visibility = 'hidden';
             document.getElementById("fish_div").style.visibility = 'hidden';
+            document.getElementById("elephant_div").style.visibility = 'hidden';
             break;
         case 3:
             for (var i = 1; i < 6; i++) {
@@ -336,6 +355,7 @@ $('#parent_div').click(function(){
             document.getElementById("flowerpiece_div").style.visibility = 'hidden';
             document.getElementById("object_div").style.visibility = 'hidden';
             document.getElementById("fish_div").style.visibility = 'hidden';
+            document.getElementById("elephant_div").style.visibility = 'hidden';
             break;
         case 4:
             for (var i = 1; i < 6; i++) {
@@ -347,6 +367,7 @@ $('#parent_div').click(function(){
             document.getElementById("flowerpiece_div").style.visibility = 'visible'; 
             document.getElementById("object_div").style.visibility = 'hidden';
             document.getElementById("fish_div").style.visibility = 'hidden';
+            document.getElementById("elephant_div").style.visibility = 'hidden';
             break;
         case 5:
             for (var i = 1; i < 6; i++) {
@@ -362,8 +383,9 @@ $('#parent_div').click(function(){
                 document.getElementById("rotate_fan_div").style.visibility = 'visible';
             }, 1500);
             document.getElementById("fish_div").style.visibility = 'hidden';
+            document.getElementById("elephant_div").style.visibility = 'hidden';
             break;
-        case 0:
+        case 6:
             for (var i = 1; i < 6; i++) {
                 document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
             }
@@ -377,6 +399,19 @@ $('#parent_div').click(function(){
             setTimeout(function() {
                 document.getElementById("FISH_body_div").style.visibility = 'visible';
             }, 1500);
+            document.getElementById("elephant_div").style.visibility = 'hidden';
+            break;
+        case 1:
+            for (var i = 1; i < 6; i++) {
+                document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
+            }
+            document.getElementById("wingman_div").style.visibility = 'hidden';
+            document.getElementById("Hand").style.visibility = 'hidden';
+            document.getElementById("hand_sphere").style.visibility = 'hidden';
+            document.getElementById("flowerpiece_div").style.visibility = 'hidden';
+            document.getElementById("object_div").style.visibility = 'hidden';
+            document.getElementById("fish_div").style.visibility = 'hidden';
+            document.getElementById("elephant_div").style.visibility = 'visible';
             break;
     }
     audioplay("balltouchingground");
@@ -497,40 +532,45 @@ $('#parent_div').click(function(){
     // setposition("nose_WIFI_div", 88, 95);
     var h = 0, h2 = 70;
     var opening = setInterval(function() {
+        open_key = 1;
         if(h < -90) {
-            clearInterval(opening);
+            clearInterval(opening);            
             // fall_smiley();             
             setTimeout(function(){
-                if (stage % 6 === 1) {
+                if (stage % total_stage === 0) {
                     for (var i = 1; i < 6; i++) {
                         document.getElementById("smiley" + i + "_div").style.visibility = 'hidden';
                     }
                     fall_smiley(); 
-                } else if (stage % 6 === 2) {
+                } else if (stage % total_stage === 2) {
                     document.getElementById("wingman_div").style.visibility = 'hidden'; 
                     document.getElementById("wing_right_div").style.visibility = 'hidden'; 
                     document.getElementById("wing_left_div").style.visibility = 'hidden'; 
                     fall_wingman(); 
-                } else if (stage % 6 === 3) {
+                } else if (stage % total_stage === 3) {
                     document.getElementById("hand_sphere").style.visibility = 'hidden';
                     fall_handpiece();
-                } else if (stage % 6 === 4) {
+                } else if (stage % total_stage === 4) {
                     document.getElementById("flowerpiece_div").style.visibility = 'hidden';
                     fall_flowerpiece();
-                } else if (stage % 6 == 5) {
+                } else if (stage % total_stage == 5) {
                     document.getElementById("object_div").style.visibility = 'hidden';
                     document.getElementById("rotate_fan_div").style.visibility = 'hidden';
                     fall_object();
-                } else {
+                } else if (stage % total_stage == 6) {
                     document.getElementById("fish_div").style.visibility = 'hidden';
                     document.getElementById("FISH_body_div").style.visibility = 'hidden';
                     fall_fish();
+                } else {
+                    document.getElementById("elephant_div").style.visibility = 'hidden';
+                    fall_elephant();
                 }
                 setTimeout(function() {
                     audioplay("ClosingSphere"); 
                     var closing = setInterval(function() {
                         if(h > 0) {
                             clearInterval(closing);
+                            open_key = 0;
                             // setposition("nose_WIFI_div", 88, 109);
                             document.getElementById("MOUTH_div").style.visibility = 'visible';
                             document.getElementById("MOUTH_OPEN_div").style.visibility = 'hidden';
@@ -549,7 +589,7 @@ $('#parent_div').click(function(){
             }, 2000);            
             return;   
         }
-        if(stage % 6 === 2 && h < -60) {
+        if(stage % total_stage === 2 && h < -60) {
             document.getElementById("wing_right_div").style.visibility = 'visible'; 
             document.getElementById("wing_left_div").style.visibility = 'visible'; 
         }      
@@ -562,7 +602,7 @@ $('#parent_div').click(function(){
 
 var moving_creature, dirX = 1, dirY = 1;
 
-function move_creature(object_id, x, y) {
+function move_creature(object_id, x, y, iid, index) {
     var dx = $('#container').width()/1000 * Math.random();
     var dy = $('#container').height()/1000 * Math.random();
     var dx_yoga = $('#container').width()/1000 * Math.random();
@@ -603,6 +643,43 @@ function move_creature(object_id, x, y) {
             y0 += movY;
             setposition(object_id, x0 - 125, y0 - 125);
         }, 5);
+    } else if (iid === "fish" || iid === "eleph") {
+        var flynum = 0;
+        var moving_fish, dirX_yoga = 1;
+        moving_fish = setInterval(function() {
+            if(x < $('#container').width() * 999 / 1000 - x * 42 / 100 && dirX_yoga == 1) {
+                movX_yoga = dx_yoga;
+            }
+            if(x > $('#container').width() * 1 / 1000 && dirX_yoga == -1){
+                movX_yoga = -dx_yoga;
+            }
+            if(x < $('#container').width() * 1 / 1000 && dirX_yoga == -1){
+                movX_yoga = dx_yoga;
+                dirX_yoga = 1;
+            }
+            if(x > $('#container').width() * 999 / 1000 - x * 42 / 100 && dirX_yoga == 1){
+                movX_yoga = -dx_yoga;
+                dirX_yoga = -1;
+            }
+            if(flynum < 3000) {
+                movY_yoga = -dy_yoga / 5;
+            } else if(flynum < 3500) {
+                movY_yoga = 0;
+            } else if(flynum < 6500) {
+                movY_yoga = dy_yoga / 5;
+            } else {
+                clearInterval(moving_fish);
+                walking(object_id, x, y, index, 300);
+                flynum = 0;
+            }
+            flynum += 1;
+            x += movX_yoga;
+            y += movY_yoga;
+            setposition(object_id, x, y);
+            if (iid === "eleph") {
+                audioplay("elephant");
+            }            
+        }, 5);
     } else {
         var flynum = 0;
         var moving_yogaman, dirX_yoga = 1;
@@ -632,7 +709,7 @@ function move_creature(object_id, x, y) {
                 audioplay("YogaManTouchingGround");
                 setTimeout(function() {
                     move_creature(object_id, x, y);
-                }, 8000);
+                }, 8000);                
                 flynum = 0;
             }
             flynum += 1;
@@ -881,15 +958,116 @@ function fall_fish() {
 
 }
 
+let fall_eleph_index = 1;
+function fall_elephant() {
+    let eleph_x = x0 * 1.2;
+    let eleph_y = y0 * 1.2;
+
+    creatediv("fall_eleph" + fall_eleph_index, "container", 190, 220, 100, 5);
+    setposition("fall_eleph" + fall_eleph_index + "_div", eleph_x, eleph_y);
+
+    creatediv("fall_eleph_head" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 120, 70, 100, 5);
+    setposition("fall_eleph_head" + fall_eleph_index + "_div", 0, 40);
+    loadimg("eleph_head", 120, 70, "absolute", "fall_eleph_head" + fall_eleph_index + "_div", -1, "elephant/");
+
+    creatediv("fall_eleph_body" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 55, 100, 100, 4);
+    setposition("fall_eleph_body" + fall_eleph_index + "_div", 60, 50);
+    loadimg("eleph_body", 55, 100, "absolute", "fall_eleph_body" + fall_eleph_index + "_div", -1, "elephant/");
+
+    creatediv("fall_eleph_left_hand" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 3);
+    setposition("fall_eleph_left_hand" + fall_eleph_index + "_div", 70, 80);
+    loadimg_index("eleph_hand", 120, 35, "absolute", "fall_eleph_left_hand" + fall_eleph_index + "_div", -1, "elephant/", "_left" + fall_eleph_index);
+    setposition("eleph_hand_left" + fall_eleph_index, -10, -10);
+    $("#fall_eleph_left_hand" + fall_eleph_index + "_div").addClass("manleftleg");
+
+    creatediv("fall_eleph_right_hand" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 5);
+    setposition("fall_eleph_right_hand" + fall_eleph_index + "_div", 85, 85);
+    loadimg_index("eleph_hand", 120, 35, "absolute", "fall_eleph_right_hand" + fall_eleph_index + "_div", -1, "elephant/", "_right" + fall_eleph_index);
+    setposition("eleph_hand_right" + fall_eleph_index, -10, -10);
+    $("#fall_eleph_right_hand" + fall_eleph_index + "_div").addClass("manrightleg");
+
+    creatediv("fall_eleph_left_leg" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 3);
+    setposition("fall_eleph_left_leg" + fall_eleph_index + "_div", 135, 60);
+    loadimg_index("eleph_leg", 130, 100, "absolute", "fall_eleph_left_leg" + fall_eleph_index + "_div", -1, "elephant/", "_left" + fall_eleph_index);
+    setposition("eleph_leg_left" + fall_eleph_index, 0, 0);
+    $("#fall_eleph_left_leg" + fall_eleph_index + "_div").addClass("manrightleg");
+
+    creatediv("fall_eleph_right_leg" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 5);
+    setposition("fall_eleph_right_leg" + fall_eleph_index + "_div", 145, 50);
+    loadimg_index("eleph_leg", 130, 100, "absolute", "fall_eleph_right_leg" + fall_eleph_index + "_div", -1, "elephant/", "_right" + fall_eleph_index);
+    setposition("eleph_leg_right" + fall_eleph_index, 0, 0);
+    $("#fall_eleph_right_leg" + fall_eleph_index + "_div").addClass("manleftleg");
+
+    creatediv("fall_eleph_left_wing" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 3);
+    setposition("fall_eleph_left_wing" + fall_eleph_index + "_div", 100, 60);
+    loadimg_index("eleph_left_wing", 80, 50, "absolute", "fall_eleph_left_wing" + fall_eleph_index + "_div", -1, "elephant/", fall_eleph_index);
+    setposition("eleph_left_wing" + fall_eleph_index, -25, -75);
+    $("#fall_eleph_left_wing" + fall_eleph_index + "_div").addClass("eleph_wing_left");
+
+    creatediv("fall_eleph_right_wing" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 5);
+    setposition("fall_eleph_right_wing" + fall_eleph_index + "_div", 120, 60);
+    loadimg_index("eleph_right_wing", 80, 50, "absolute", "fall_eleph_right_wing" + fall_eleph_index + "_div", -1, "elephant/", fall_eleph_index);
+    setposition("eleph_right_wing" + fall_eleph_index, -25, -75);
+    $("#fall_eleph_right_wing" + fall_eleph_index + "_div").addClass("eleph_wing_right");
+
+    falling_fish("fall_eleph" + fall_eleph_index + "_div", eleph_x, eleph_y, fall_eleph_index);
+
+    fall_eleph_index += 1;
+}
+
 function falling_fish(fish_id, x, y, index) {
     let dy = Math.random() + 0.5;
     let falling_fisher = setInterval(function() {
         if ($('#' + fish_id).position().top > $('#container').height() - $('#' + fish_id).height()) {
-            clearInterval(falling_fisher);
-            audioplay("Fishmanwalking");
+            clearInterval(falling_fisher);            
+            walking(fish_id, x, y, index, 300);
         }
         y += dy;
         setposition(fish_id, x, y);
+    }, 10);
+}
+
+function walking(objects_id, x, y, index, time) {
+    var dirkey = 1, speed = 5, num = 0;
+    let walking_var = setInterval(function() {
+        if (num > time) {
+            clearInterval(walking_var);
+            if(objects_id === "fall_fishpiece" + index + "_div") {
+                move_creature(objects_id, x, y, "fish", index);
+            }
+            if(objects_id === "fall_eleph" + index + "_div") {
+                move_creature(objects_id, x, y, "eleph", index);
+            }
+        }
+        var dx = 0;
+        if(dirkey === 1) {
+            if(index % 2 === 0 && x < $('#container').width() - $("#" + objects_id).width()) {
+                dx = speed * 0.1;
+            }
+            else if(index % 2 === 1 && x > 0) {
+                dx = -speed * 0.1;
+            }
+            else {
+                dirkey = -1;
+            }
+        }
+        if(dirkey === -1) {
+            if(index % 2 === 1 && x < $('#container').width() - $("#" + objects_id).width()) {
+                dx = speed * 0.1;
+            }
+            else if(index % 2 === 0 && x > 0) {
+                dx = -speed * 0.1;
+            }
+            else {
+                dirkey = 1;
+            }
+        }
+        x += dx;
+        setposition(objects_id, x, y);
+        if(objects_id === "fall_fishpiece" + index + "_div") {
+            audioplay("Fishmanwalking");
+        }        
+        num += 1;
     }, 10);
 }
 

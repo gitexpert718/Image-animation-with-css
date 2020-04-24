@@ -217,6 +217,33 @@ div {
     100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
 }
 
+.eleph_wing_left {
+    /* -webkit-animation: rotation 5s infinite linear; */
+    -webkit-animation: spin_eleph_wing_left 6s infinite linear;
+}
+
+@-moz-keyframes spin_eleph_wing_left { 
+    0% { -moz-transform: rotate(0deg); } 
+    15% { -moz-transform: rotate(-10deg); }
+    30% { -moz-transform: rotate(0deg); }
+    75% { -moz-transform: rotate(15deg); }
+    100% { -moz-transform: rotate(0deg); } 
+}
+@-webkit-keyframes spin_eleph_wing_left { 
+    0% { -webkit-transform: rotate(0deg); }
+    15% { -webkit-transform: rotate(-10deg); }
+    30% { -webkit-transform: rotate(0deg); }
+    75% { -webkit-transform: rotate(15deg); }
+    100% { -webkit-transform: rotate(0deg); } 
+}
+@keyframes spin_eleph_wing_left { 
+    0% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    15% { -webkit-transform: rotate(-10deg); transform:rotate(-10deg); } 
+    30% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    75% { -webkit-transform: rotate(15deg); transform:rotate(15deg); } 
+    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+}
+
 .wing_right {
     /* -webkit-animation: rotation 5s infinite linear; */
     -webkit-animation: spin_wing_right 6s infinite linear;
@@ -241,6 +268,33 @@ div {
     15% { -webkit-transform: rotate(10deg); transform:rotate(10deg); } 
     30% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
     75% { -webkit-transform: rotate(-35deg); transform:rotate(-35deg); } 
+    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+}
+
+.eleph_wing_right {
+    /* -webkit-animation: rotation 5s infinite linear; */
+    -webkit-animation: spin_eleph_wing_right 6s infinite linear;
+}
+
+@-moz-keyframes spin_eleph_wing_right { 
+    0% { -moz-transform: rotate(0deg); } 
+    15% { -moz-transform: rotate(10deg); }
+    30% { -moz-transform: rotate(0deg); }
+    75% { -moz-transform: rotate(-15deg); }
+    100% { -moz-transform: rotate(0deg); } 
+}
+@-webkit-keyframes spin_eleph_wing_right { 
+    0% { -webkit-transform: rotate(0deg); }
+    15% { -webkit-transform: rotate(10deg); }
+    30% { -webkit-transform: rotate(0deg); }
+    75% { -webkit-transform: rotate(-15deg); }
+    100% { -webkit-transform: rotate(0deg); } 
+}
+@keyframes spin_eleph_wing_right { 
+    0% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    15% { -webkit-transform: rotate(10deg); transform:rotate(10deg); } 
+    30% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    75% { -webkit-transform: rotate(-15deg); transform:rotate(-15deg); } 
     100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
 }
 
