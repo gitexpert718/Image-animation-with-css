@@ -39,6 +39,10 @@ div {
     display: inline-block;
 }
 
+.divcolor {
+    background-color: rgba(119, 141, 140, 0.3);
+}
+
 .rotate {
     /* -webkit-animation: rotation 5s infinite linear; */
     -webkit-animation: spin 3s infinite linear;
@@ -403,5 +407,59 @@ div {
     25% { -webkit-transform: rotate(15deg); transform:rotate(15deg); } 
     50% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
     75% { -webkit-transform: rotate(-5deg); transform:rotate(-5deg); } 
+    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+}
+
+.butterfly_wing_left {
+    /* -webkit-animation: rotation 5s infinite linear; */
+    -webkit-animation: spin_butterfly_wing_left 0.2s infinite linear;
+}
+
+@-moz-keyframes spin_butterfly_wing_left { 
+    0% { -moz-transform: rotate(0deg); } 
+    25% { -moz-transform: rotate(15deg); }
+    50% { -moz-transform: rotate(0deg); }
+    75% { -moz-transform: rotate(-5deg); }
+    100% { -moz-transform: rotate(0deg); } 
+}
+@-webkit-keyframes spin_butterfly_wing_left { 
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(15deg); }
+    50% { -webkit-transform: rotate(0deg); }
+    75% { -webkit-transform: rotate(-5deg); }
+    100% { -webkit-transform: rotate(0deg); } 
+}
+@keyframes spin_butterfly_wing_left { 
+    0% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    25% { -webkit-transform: rotate(15deg); transform:rotate(15deg); } 
+    50% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    75% { -webkit-transform: rotate(-5deg); transform:rotate(-5deg); } 
+    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+}
+
+.butterfly_wing_right {
+    /* -webkit-animation: rotation 5s infinite linear; */
+    -webkit-animation: spin_butterfly_wing_right 0.2s infinite linear;
+}
+
+@-moz-keyframes spin_butterfly_wing_right { 
+    0% { -moz-transform: rotate(0deg); } 
+    25% { -moz-transform: rotate(-15deg); }
+    50% { -moz-transform: rotate(0deg); }
+    75% { -moz-transform: rotate(5deg); }
+    100% { -moz-transform: rotate(0deg); } 
+}
+@-webkit-keyframes spin_butterfly_wing_right { 
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(-15deg); }
+    50% { -webkit-transform: rotate(0deg); }
+    75% { -webkit-transform: rotate(5deg); }
+    100% { -webkit-transform: rotate(0deg); } 
+}
+@keyframes spin_butterfly_wing_right { 
+    0% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    25% { -webkit-transform: rotate(-15deg); transform:rotate(-15deg); } 
+    50% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    75% { -webkit-transform: rotate(5deg); transform:rotate(5deg); } 
     100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
 }
