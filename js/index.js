@@ -1,12 +1,74 @@
-var x0 = $('#container').width()/2;
-var y0 = $('#container').height()/2;
-var smile_index = 1;
-var stage = 1, total_stage = 9;
-// console.log(x0, y0);
+let x0 = $('#container').width()/2;
+let y0 = $('#container').height()/2;
+let smile_index = 1;
+let stage = 1, total_stage = 9;
+let backClass=["dark0", "dark1", "dark2", "dark3", "dark4"];
+let cntClass = "dark0";
+let global_time = 0;
 
 init();
 
+function backColorAutoChange() {
+    $("#body").removeClass("dark5");
+    $("#body").addClass(cntClass);
+
+    $("#body").removeClass(cntClass);
+    $("#body").addClass("dark5");
+    let changed = setInterval(function() {            
+        $("#body").removeClass("dark5");
+        $("#body").addClass(cntClass);
+        clearInterval(changed);
+    }, 1000);
+}
+
+function blink() {
+    document.getElementById("MOUTH_div").style.visibility = 'hidden';
+    document.getElementById("MOUTH_OPEN_div").style.visibility = 'visible';
+    let mousechange = setInterval(function() {            
+        document.getElementById("MOUTH_div").style.visibility = 'visible';
+        document.getElementById("MOUTH_OPEN_div").style.visibility = 'hidden';
+        clearInterval(mousechange);
+    }, 5000);
+    let flag = 0;
+    let inverse = setInterval(function() {
+        if(flag % 2 === 1){
+            document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'hidden';
+            document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'visible';
+            document.getElementById("STRIPE_TRIANGLE_UP_OPPOSITECOLOR").style.visibility = 'hidden';
+            document.getElementById("STRIPE_TRIANGLE2").style.visibility = 'visible';
+            flag += 1;
+        } else {
+            document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'visible';
+            document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'hidden';
+            document.getElementById("STRIPE_TRIANGLE_UP_OPPOSITECOLOR").style.visibility = 'visible';
+            document.getElementById("STRIPE_TRIANGLE2").style.visibility = 'hidden';
+            flag += 1;
+        }
+        if(flag > 6) {
+            document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'hidden';
+            document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'visible';
+            document.getElementById("STRIPE_TRIANGLE_UP_OPPOSITECOLOR").style.visibility = 'hidden';
+            document.getElementById("STRIPE_TRIANGLE2").style.visibility = 'visible';
+            clearInterval(inverse);
+            return;
+        }   
+    }, 1000 / 1.5 );
+}
+
 function init() {
+    
+    setInterval(() => {
+        blink();
+    }, 15000);
+
+    setInterval(() => {
+        global_time += 1;
+        console.log("global_time", global_time);
+        if(global_time > 15) {
+            main();
+        }
+    }, 1000);
+
     creatediv("parent", "container", 250, 250, 100);
     setposition("parent_div", x0 - 125, y0 - 125);
 
@@ -19,13 +81,14 @@ function init() {
     setposition("HalfSphereGREY_div", 0, 0);
     loadimg("HalfSphereGREY", 150, 250, "absolute", "HalfSphereGREY_div", 0, "");
     setposition("HalfSphereGREY", 0, 0);
-    //modify
-    // document.getElementById("HalfSphereGREY_div").style.visibility = 'hidden';
 
     creatediv("STRIPE_TRIANGLE2", "HalfSphereGREY_div", 60, 90, 100, 1);
     setposition("STRIPE_TRIANGLE2_div", 80, 0);
     loadimg("STRIPE_TRIANGLE2", 60, 90, "absolute", "STRIPE_TRIANGLE2_div", 0, "");
     setposition("STRIPE_TRIANGLE2", 0, 0);
+    loadimg("STRIPE_TRIANGLE_UP_OPPOSITECOLOR", 60, 90, "absolute", "STRIPE_TRIANGLE2_div", 0, "");
+    setposition("STRIPE_TRIANGLE_UP_OPPOSITECOLOR", 0, 0);
+    document.getElementById("STRIPE_TRIANGLE_UP_OPPOSITECOLOR").style.visibility = 'hidden';
 
     creatediv("EYE_LEFT", "HalfSphereGREY_div", 0, 0, 100, 1);
     setposition("EYE_LEFT_div", 73, 85);
@@ -107,7 +170,7 @@ function init() {
     create_eyefeet();
     document.getElementById("eyefeet_div").style.visibility = 'hidden';
     create_butterfly();
-    // document.getElementById("butterfly_div").style.visibility = 'hidden';
+    document.getElementById("butterfly_div").style.visibility = 'hidden';
     // $("#butterfly_div").addClass("divcolor");
     
     //modify
@@ -169,19 +232,19 @@ function create_wingman() {
     setposition("wingman_div", wingman_dx, wingman_dy);
 
     creatediv("wing_left", "wingman_div", 0, 0, 100, 5);
-    setposition("wing_left_div", 90, 120);
-    loadimg("wing_left", 150, 90, "absolute", "wing_left_div", -1, "wing_man/");
-    setposition("wing_left", 0, -150);
+    setposition("wing_left_div", 90, 110);
+    loadimg("wing_left", 110, 90, "absolute", "wing_left_div", -1, "wing_man/");
+    setposition("wing_left", 0, -115);
 
     creatediv("wing_right", "wingman_div", 0, 0, 100, 5);
-    setposition("wing_right_div", 90, 120);
-    loadimg("wing_right", 150, 90, "absolute", "wing_right_div", -1, "wing_man/");
-    setposition("wing_right", -90, -150);
+    setposition("wing_right_div", 90, 110);
+    loadimg("wing_right", 110, 90, "absolute", "wing_right_div", -1, "wing_man/");
+    setposition("wing_right", -90, -110);
 
     // creatediv("man", "wingman_div", 100, 60, 100, 5);
     // setposition("man_div", 90, 120);
-    loadimg("man", 100, 60, "absolute", "wingman_div", 6, "wing_man/");
-    setposition("man", 65, 80);
+    loadimg("man", 150, 100, "absolute", "wingman_div", 6, "wing_man/");
+    setposition("man", 43, 37);
 
     $("#wing_right_div").addClass("wing_right");
     $("#wing_left_div").addClass("wing_left");
@@ -244,31 +307,31 @@ function create_object() {
     loadimg("apple", 140, 120, "absolute", "apple_div", -1, "objects/");
     setposition("apple", 88, -25);
 
-    creatediv("smallman", "object_div", 130, 100, 100, 5);
-    setposition("smallman_div", 35, 20);
-    loadimg("smallman", 50, 30, "absolute", "smallman_div", -1, "objects/");
-    setposition("smallman", 74, 80);
+    creatediv("smallman", "object_div", 100, 60, 100, 5);
+    setposition("smallman_div", 92, 41);
+    loadimg("smallman", 100, 60, "absolute", "smallman_div", -1, "objects/");
+    setposition("smallman", 0, 0);
 }
 
 function create_fish() {
-    creatediv("fish", "HalfSphereGREEN_div", 145, 180, 100, 5);
-    setposition("fish_div", 47, -68);
+    creatediv("fish", "HalfSphereGREEN_div", 119, 150, 100, 5);
+    setposition("fish_div", 58, -53);
 
-    creatediv("FISH_body", "fish_div", 100, 180, 100, 5);
+    creatediv("FISH_body", "fish_div", 85, 150, 100, 5);
     setposition("FISH_body_div", 0, 0);
-    loadimg("FISH_body", 100, 180, "absolute", "FISH_body_div", -1, "fish/");
+    loadimg("FISH_body", 85, 150, "absolute", "FISH_body_div", -1, "fish/");
     setposition("FISH_body", 0, 0);
 
     creatediv("FISH_LEG1", "fish_div", 0, 0, 100, 5);
-    setposition("FISH_LEG1_div", 80, 38);
-    loadimg_index("FISH_LEG", 150, 90, "absolute", "FISH_LEG1_div", -1, "fish/", 100);
-    setposition("FISH_LEG100", -75, -29);
+    setposition("FISH_LEG1_div", 64, 38);
+    loadimg_index("FISH_LEG", 120, 70, "absolute", "FISH_LEG1_div", -1, "fish/", 100);
+    setposition("FISH_LEG100", -57, -23);
     $('#FISH_LEG1_div').addClass('manrightleg');
 
     creatediv("FISH_LEG2", "fish_div", 0, 0, 100, 5);
-    setposition("FISH_LEG2_div", 80, 38);
-    loadimg_index("FISH_LEG", 150, 90, "absolute", "FISH_LEG2_div", -1, "fish/", 200);
-    setposition("FISH_LEG200", -75, -29);
+    setposition("FISH_LEG2_div", 66, 38);
+    loadimg_index("FISH_LEG", 120, 70, "absolute", "FISH_LEG2_div", -1, "fish/", 200);
+    setposition("FISH_LEG200", -57, -26);
     $('#FISH_LEG2_div').addClass('manleftleg');
 }
 
@@ -334,7 +397,8 @@ function stop_left(id, num) {
 
 let open_key = 0;
 
-$('#parent_div').click(function(){
+function main() {
+    global_time = 0;
     if(open_key === 1) {
         return;
     }
@@ -484,124 +548,39 @@ $('#parent_div').click(function(){
     audioplay("OpeningSphere");
     assign_smiley();
     clearInterval(moving_creature);
-    var flag = 0, flag_background = 0;
-    var inverse = setInterval(function() {
-        if(flag % 2 === 0){
-            document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'hidden';
-            document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'visible';
-            flag += 1;
-        } else {
-            document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'visible';
-            document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'hidden';
-            flag += 1;
-        }
-        if(flag > 7) {
-            document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'hidden';
-            document.getElementById("STRIPE_TRIANGLE1").style.visibility = 'visible';
-            clearInterval(inverse);
-            return;
-        }   
-    }, 1000 / 1.2 );
     switch (stage % 5) {
         case 1:
-            $("#body").removeClass("dark0");
-            $("#body").addClass("dark1");
+            $("#body").removeClass(backClass[0]);
+            $("#body").addClass(backClass[1]);
+            cntClass = backClass[1];
             break;
         case 2:
-            $("#body").removeClass("dark1");
-            $("#body").addClass("dark2");
+            $("#body").removeClass(backClass[1]);
+            $("#body").addClass(backClass[2]);
+            cntClass = backClass[2];
             break;
         case 3:
-            $("#body").removeClass("dark2");
-            $("#body").addClass("dark3");
+            $("#body").removeClass(backClass[2]);
+            $("#body").addClass(backClass[3]);
+            cntClass = backClass[3];
             break;
         case 4:
-            $("#body").removeClass("dark3");
-            $("#body").addClass("dark4");
+            $("#body").removeClass(backClass[3]);
+            $("#body").addClass(backClass[4]);
+            cntClass = backClass[4];
             break;
         case 0:
-            $("#body").removeClass("dark4");
-            $("#body").addClass("dark0");
+            $("#body").removeClass(backClass[4]);
+            $("#body").addClass(backClass[0]);
+            cntClass = backClass[0];
             break;
     }
-    // var backcolor_change = setInterval(function() {
-    //     if(flag_background > 5) {
-    //         clearInterval(backcolor_change);
-    //         $('#body').addClass("dark0");
-    //         switch (stage % 5) {
-    //             case 1:
-    //                 $('#body').removeClass("dark1");
-    //                 break;
-    //             case 2:
-    //                 $('#body').removeClass("dark2");
-    //                 break;
-    //             case 3:
-    //                 $('#body').removeClass("dark3");
-    //                 break;
-    //             case 4:
-    //                 $('#body').removeClass("dark4");
-    //                 break;
-    //             case 0:
-    //                 $('#body').removeClass("dark5");
-    //                 break;
-    //         }
-    //         flag_background = 0;
-    //         return;
-    //     } 
-    //     flag_background += 1; 
-    //     switch (flag_background % 2) {
-    //         case 0:
-    //             $('#body').addClass("dark0");                
-    //             switch (stage % 5) {
-    //                 case 1:
-    //                     $('#body').removeClass("dark1");
-    //                     break;
-    //                 case 2:
-    //                     $('#body').removeClass("dark2");
-    //                     break;
-    //                 case 3:
-    //                     $('#body').removeClass("dark3");
-    //                     break;
-    //                 case 4:
-    //                     $('#body').removeClass("dark4");
-    //                     break;
-    //                 case 0:
-    //                     $('#body').removeClass("dark5");
-    //                     break;
-    //             }
-    //             break;
-    //         case 1:
-    //             $('#body').removeClass("dark0");
-    //             switch (stage % 5) {
-    //                 case 1:
-    //                     $('#body').addClass("dark1");
-    //                     break;
-    //                 case 2:
-    //                     $('#body').addClass("dark2");
-    //                     break;
-    //                 case 3:
-    //                     $('#body').addClass("dark3");
-    //                     break;
-    //                 case 4:
-    //                     $('#body').addClass("dark4");
-    //                     break;
-    //                 case 0:
-    //                     $('#body').addClass("dark5");
-    //                     break;
-    //             }
-    //             break;
-    //     }
-    // }, 1000 / 1.2 );
-    document.getElementById("MOUTH_div").style.visibility = 'hidden';
-    document.getElementById("MOUTH_OPEN_div").style.visibility = 'visible';
     document.getElementById("STRIPE_TRIANGLE_OPPOSITECOLOR").style.visibility = 'visible';
-    // setposition("nose_WIFI_div", 88, 95);
     var h = 0, h2 = 70;
     var opening = setInterval(function() {
         open_key = 1;
         if(h < -90) {
-            clearInterval(opening);            
-            // fall_smiley();             
+            clearInterval(opening);      
             setTimeout(function(){
                 if (stage % total_stage === 8) {
                     for (var i = 1; i < 6; i++) {
@@ -643,9 +622,7 @@ $('#parent_div').click(function(){
                         if(h > 0) {
                             clearInterval(closing);
                             open_key = 0;
-                            // setposition("nose_WIFI_div", 88, 109);
-                            document.getElementById("MOUTH_div").style.visibility = 'visible';
-                            document.getElementById("MOUTH_OPEN_div").style.visibility = 'hidden';
+                            global_time = 0;
                             move_creature("parent_div");                        
                             stage += 1;                         
                             return;
@@ -653,9 +630,7 @@ $('#parent_div').click(function(){
                         h += 2.4;
                         h2 -= 1;
                         setposition("HalfSphereGREY_div", 0, h);
-                        setposition("HalfSphereGREEN_div", 0, h2);                 
-                        // audioplay("ClosingSphere"); 
-                        // modify               
+                        setposition("HalfSphereGREEN_div", 0, h2);
                     }, 40);
                 }, 2000);
             }, 2000);            
@@ -669,7 +644,11 @@ $('#parent_div').click(function(){
         h2 += 0.5;        
         setposition("HalfSphereGREY_div", 0, h);
         setposition("HalfSphereGREEN_div", 0, h2);                  
-    }, 1000 / 25 );    
+    }, 1000 / 25 );
+}
+
+$('#parent_div').click(function(){
+    main();
 });
 
 var moving_creature, dirX = 1, dirY = 1;
@@ -959,20 +938,20 @@ function fall_wingman() {
     loadimg_index("wing_right", 180, 105, "absolute", "fall_wing_right" + fall_wingman_index + "_div", -1, "wing_man/", fall_wingman_index);
     setposition("wing_right" + fall_wingman_index, -105, -180);
     
-    creatediv("fall_manwithouthands" + fall_wingman_index, "fall_wingman" + fall_wingman_index + "_div", 130, 80, 100, 5);
-    setposition("fall_manwithouthands" + fall_wingman_index + "_div", 70, 80);
-    loadimg_index("manwithouthands", 130, 80, "absolute", "fall_manwithouthands" + fall_wingman_index + "_div", 6, "wing_man/", fall_wingman_index);
+    creatediv("fall_manwithouthands" + fall_wingman_index, "fall_wingman" + fall_wingman_index + "_div", 166, 130, 100, 5);
+    setposition("fall_manwithouthands" + fall_wingman_index + "_div", 35, 29);
+    loadimg_index("manwithouthands", 186, 130, "absolute", "fall_manwithouthands" + fall_wingman_index + "_div", 6, "wing_man/", fall_wingman_index);
     setposition("manwithouthands" + fall_wingman_index, 0, 0); 
     
     creatediv("fall_handleft" + fall_wingman_index, "fall_wingman" + fall_wingman_index + "_div", 0, 0, 100, 5);
-    setposition("fall_handleft" + fall_wingman_index + "_div", 95, 120);
-    loadimg_index("handleft", 52, 35, "absolute", "fall_handleft" + fall_wingman_index + "_div", -1, "wing_man/", fall_wingman_index);
-    setposition("handleft" + fall_wingman_index, -15, -5);
+    setposition("fall_handleft" + fall_wingman_index + "_div", 78, 85);
+    loadimg_index("handleft", 100, 70, "absolute", "fall_handleft" + fall_wingman_index + "_div", -1, "wing_man/", fall_wingman_index);
+    setposition("handleft" + fall_wingman_index, -33, -5);
 
     creatediv("fall_handright" + fall_wingman_index, "fall_wingman" + fall_wingman_index + "_div", 0, 0, 100, 5);
-    setposition("fall_handright" + fall_wingman_index + "_div", 120, 120);
-    loadimg_index("handright", 52, 35, "absolute", "fall_handright" + fall_wingman_index + "_div", -1, "wing_man/", fall_wingman_index);
-    setposition("handright" + fall_wingman_index, -15, -5);
+    setposition("fall_handright" + fall_wingman_index + "_div", 120, 84);
+    loadimg_index("handright", 100, 70, "absolute", "fall_handright" + fall_wingman_index + "_div", -1, "wing_man/", fall_wingman_index);
+    setposition("handright" + fall_wingman_index, -36, -5);
 
     $("#fall_wing_right" + fall_wingman_index + "_div").addClass("wing_right");
     $("#fall_wing_left"  + fall_wingman_index + "_div").addClass("wing_left");
@@ -1023,34 +1002,46 @@ function fall_object() {
     var object_x = x0 * 1.2;
     var object_y = y0 * 1.2;
 
+    creatediv("fall_base_fan" + fall_object_index, "container", 125, 12, 100, 5);
+    setposition("fall_base_fan" + fall_object_index + "_div", object_x, object_y);
+    loadimg_index("base_fan", 125, 12, "absolute", "fall_base_fan" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("base_fan" + fall_object_index, 0, 0);
+
+    creatediv("fall_fan" + fall_object_index, "fall_base_fan" + fall_object_index + "_div", 0, 0, 100, 5);
+    setposition("fall_fan" + fall_object_index + "_div", 5, -1);
+    loadimg_index("fan", 70, 99, "absolute", "fall_fan" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("fan" + fall_object_index, -48, -52);
+    $("#fall_fan" + fall_object_index + "_div").addClass("rotate");
+
     creatediv("fall_pyramid" + fall_object_index, "container", 109, 100, 100, 5);
-    setposition("fall_pyramid" + fall_object_index + "_div", object_x - 50, object_y);
+    setposition("fall_pyramid" + fall_object_index + "_div", object_x - 10, object_y);
     loadimg_index("pyramid", 100, 140, "absolute", "fall_pyramid" + fall_object_index + "_div", -1, "objects/", fall_object_index);
-    setposition("pyramid" + fall_object_index, 0, 15);
+    setposition("pyramid" + fall_object_index, 0, 15);    
 
     creatediv("fall_apple" + fall_object_index, "container", 114, 100, 100, 5);
-    setposition("fall_apple" + fall_object_index + "_div", object_x +100, object_y);
+    setposition("fall_apple" + fall_object_index + "_div", object_x +120, object_y);
     loadimg_index("apple", 140, 120, "absolute", "fall_apple" + fall_object_index + "_div", -1, "objects/", fall_object_index);
-    setposition("apple" + fall_object_index, 88, -25);
+    setposition("apple" + fall_object_index, 88, -25);    
 
-    creatediv("fall_smallman" + fall_object_index, "container", 45, 20, 100, 5);
-    setposition("fall_smallman" + fall_object_index + "_div", object_x + 25, object_y + 25);
-    loadimg_index("man_up", 20, 20, "absolute", "fall_smallman" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    creatediv("fall_smallman" + fall_object_index, "container", 85, 40, 100, 5);
+    setposition("fall_smallman" + fall_object_index + "_div", object_x + 75, object_y + 25);
+    loadimg_index("man_up", 40, 40, "absolute", "fall_smallman" + fall_object_index + "_div", -1, "objects/", fall_object_index);
     setposition("man_up" + fall_object_index, 0, 4);
 
     creatediv("Manleftleg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 100, 5);
-    setposition("Manleftleg" + fall_object_index + "_div", 10, 20);
-    loadimg_index("Manleftleg", 25, 20, "absolute", "Manleftleg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
-    setposition("Manleftleg" + fall_object_index, -15, 0);
+    setposition("Manleftleg" + fall_object_index + "_div", 20, 32);
+    loadimg_index("Manleftleg", 50, 40, "absolute", "Manleftleg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("Manleftleg" + fall_object_index, -30, 2);
 
     creatediv("ManRightLeg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 100, 5);
-    setposition("ManRightLeg" + fall_object_index + "_div", 11, 20);
-    loadimg_index("ManRightLeg", 25, 20, "absolute", "ManRightLeg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
-    setposition("ManRightLeg" + fall_object_index, -5, 0);
+    setposition("ManRightLeg" + fall_object_index + "_div", 22, 32);
+    loadimg_index("ManRightLeg", 50, 40, "absolute", "ManRightLeg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("ManRightLeg" + fall_object_index, -10, 2);
 
-    falling_object("fall_pyramid" + fall_object_index + "_div", object_x - 50, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
-    falling_object("fall_apple" + fall_object_index + "_div", object_x + 100, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
-    falling_object("fall_smallman" + fall_object_index + "_div", object_x + 45, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
+    falling_object("fall_base_fan" + fall_object_index + "_div", object_x, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
+    falling_object("fall_pyramid" + fall_object_index + "_div", object_x - 10, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
+    falling_object("fall_apple" + fall_object_index + "_div", object_x + 120, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
+    falling_object("fall_smallman" + fall_object_index + "_div", object_x + 75, object_y, Math.random() * 0.5 + 0.3, fall_object_index);
 
     fall_object_index += 1;
 }
@@ -1060,21 +1051,21 @@ function fall_fish() {
     var fish_x = x0 * 1.2;
     var fish_y = y0 * 1.2;
 
-    creatediv("fall_fishpiece" + fall_fish_index, "container", 200, 270, 100, 5);
+    creatediv("fall_fishpiece" + fall_fish_index, "container", 160, 220, 100, 5);
     setposition("fall_fishpiece" + fall_fish_index + "_div", fish_x, fish_y);
 
-    creatediv("fall_FISH_body" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 145, 270, 100, 5);
+    creatediv("fall_FISH_body" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 145, 270, 80, 5);
     setposition("fall_FISH_body" + fall_fish_index + "_div", 0, 0);
     loadimg("FISH_body", 145, 270, "absolute", "fall_FISH_body" + fall_fish_index + "_div", -1, "fish/");
 
-    creatediv("fall_fish_leg1" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 0, 0, 100, 5);
-    setposition("fall_fish_leg1" + fall_fish_index + "_div", 105, 60);
+    creatediv("fall_fish_leg1" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 0, 0, 80, 5);
+    setposition("fall_fish_leg1" + fall_fish_index + "_div", 115, 60);
     loadimg_index("FISH_LEG", 215, 134, "absolute", "fall_fish_leg1" + fall_fish_index + "_div", -1, "fish/", "_left" + fall_fish_index);
     setposition("FISH_LEG_left" + fall_fish_index, -110, -47);
     $("#fall_fish_leg1" + fall_fish_index + "_div").addClass("manrightleg");
 
-    creatediv("fall_fish_leg2" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 0, 0, 100, 5);
-    setposition("fall_fish_leg2" + fall_fish_index + "_div", 105, 60);
+    creatediv("fall_fish_leg2" + fall_fish_index, "fall_fishpiece" + fall_fish_index + "_div", 0, 0, 80, 5);
+    setposition("fall_fish_leg2" + fall_fish_index + "_div", 115, 60);
     loadimg_index("FISH_LEG", 215, 134, "absolute", "fall_fish_leg2" + fall_fish_index + "_div", -1, "fish/", "_right" + fall_fish_index);
     setposition("FISH_LEG_right" + fall_fish_index, -110, -47);
     $("#fall_fish_leg2" + fall_fish_index + "_div").addClass("manleftleg");
@@ -1097,6 +1088,12 @@ function fall_butterfly() {
     creatediv("fall_butter_body" + fall_butterfly_index, "fall_butterfly" + fall_butterfly_index + "_div", 160, 153, 100, 5);
     setposition("fall_butter_body" + fall_butterfly_index + "_div", 25, 0);
     loadimg("butter_body", 160, 153, "absolute", "fall_butter_body" + fall_butterfly_index + "_div", -1, "butterfly/");
+
+    creatediv("fall_butter_head" + fall_butterfly_index, "fall_butterfly" + fall_butterfly_index + "_div", 0, 0, 100, 5);
+    setposition("fall_butter_head" + fall_butterfly_index + "_div", 47, 41);
+    loadimg_index("butter_head", 43, 32, "absolute", "fall_butter_head" + fall_butterfly_index + "_div", -1, "butterfly/", fall_butterfly_index);
+    setposition("butter_head" + fall_butterfly_index, -17, -44);
+    $("#fall_butter_head" + fall_butterfly_index + "_div").addClass("head_rotate");
 
     creatediv("fall_butter_flower" + fall_butterfly_index, "fall_butterfly" + fall_butterfly_index + "_div", 80, 80, 100, 5);
     setposition("fall_butter_flower" + fall_butterfly_index + "_div", 140, 70);
@@ -1181,9 +1178,11 @@ function fall_elephant() {
     creatediv("fall_eleph" + fall_eleph_index, "container", 190, 220, 100, 5);
     setposition("fall_eleph" + fall_eleph_index + "_div", eleph_x, eleph_y);
 
-    creatediv("fall_eleph_head" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 120, 70, 100, 5);
-    setposition("fall_eleph_head" + fall_eleph_index + "_div", 0, 40);
-    loadimg("eleph_head", 120, 70, "absolute", "fall_eleph_head" + fall_eleph_index + "_div", -1, "elephant/");
+    creatediv("fall_eleph_head" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 0, 0, 100, 5);
+    setposition("fall_eleph_head" + fall_eleph_index + "_div", 67, 68);
+    loadimg_index("eleph_head", 120, 70, "absolute", "fall_eleph_head" + fall_eleph_index + "_div", -1, "elephant/", fall_eleph_index);
+    setposition("eleph_head" + fall_eleph_index, -63, -30);
+    $("#fall_eleph_head" + fall_eleph_index + "_div").addClass("head_rotate");
 
     creatediv("fall_eleph_body" + fall_eleph_index, "fall_eleph" + fall_eleph_index + "_div", 55, 100, 100, 4);
     setposition("fall_eleph_body" + fall_eleph_index + "_div", 60, 50);
@@ -1303,7 +1302,7 @@ function falling_object(objects_id, x, y, dy, index) {
             if(objects_id === "fall_apple" + index + "_div") {
                 audioplay("AppleTouchesTheGround");
             }
-            if(objects_id === "fall_apple" + index + "_div" || objects_id === "fall_pyramid" + index + "_div") {
+            if(objects_id === "fall_apple" + index + "_div" || objects_id === "fall_pyramid" + index + "_div" || objects_id === "fall_base_fan" + index + "_div") {
                 $("#" + objects_id).click(function() {
                     document.getElementById(objects_id).style.visibility = "hidden";
                 });

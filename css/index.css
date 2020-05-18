@@ -26,7 +26,7 @@ html.dark4, body.dark4 {
 }
 
 html.dark5, body.dark5 {
-    background: blue;
+    background: black;
 }
 
 #container {
@@ -461,5 +461,34 @@ div {
     25% { -webkit-transform: rotate(-15deg); transform:rotate(-15deg); } 
     50% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
     75% { -webkit-transform: rotate(5deg); transform:rotate(5deg); } 
+    100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+}
+
+.head_rotate {
+    -webkit-animation: spin_head_rotate 5s infinite linear;
+}
+
+@-moz-keyframes spin_head_rotate { 
+    0% { -moz-transform: rotate(0deg); } 
+    15% { -moz-transform: rotate(10deg); }
+    35% { -moz-transform: rotate(10deg); }
+    65% { -moz-transform: rotate(-10deg); }
+    85% { -moz-transform: rotate(-10deg); }
+    100% { -moz-transform: rotate(0deg); } 
+}
+@-webkit-keyframes spin_head_rotate { 
+    0% { -webkit-transform: rotate(0deg); }
+    15% { -webkit-transform: rotate(10deg); }
+    35% { -webkit-transform: rotate(10deg); }
+    65% { -webkit-transform: rotate(-10deg); }
+    85% { -webkit-transform: rotate(-10deg); }
+    100% { -webkit-transform: rotate(0deg); } 
+}
+@keyframes spin_head_rotate { 
+    0% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
+    15% { -webkit-transform: rotate(10deg); transform:rotate(10deg); } 
+    35% { -webkit-transform: rotate(10deg); transform:rotate(10deg); } 
+    65% { -webkit-transform: rotate(-10deg); transform:rotate(-10deg); } 
+    85% { -webkit-transform: rotate(-10deg); transform:rotate(-10deg); } 
     100% { -webkit-transform: rotate(0deg); transform:rotate(0deg); } 
 }
