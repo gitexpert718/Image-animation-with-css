@@ -729,11 +729,11 @@ function move_creature(object_id, x, y, iid, index, sound_key) {
             x += movX_yoga;
             y += movY_yoga;
             setposition(object_id, x, y);
-            if (iid === "eleph" && sound_key == 1) {
-                audioplay("elephant");
-            }
-            if (iid === "eyefeet") {
-                audioplay("eyefeet");
+            // if (iid === "eleph" && sound_key == 1) {
+            //     audioplay("elephant");
+            // }
+            if (iid === "eyefeet" && sound_key == 1) {
+                audioplay("eyefeetmusic");
             }           
         }, 5);
     } else if(iid === "butterfly") {
@@ -1025,16 +1025,17 @@ function fall_object() {
 
     creatediv("fall_smallman" + fall_object_index, "container", 85, 40, 100, 5);
     setposition("fall_smallman" + fall_object_index + "_div", object_x + 75, object_y + 25);
-    loadimg_index("man_up", 40, 40, "absolute", "fall_smallman" + fall_object_index + "_div", -1, "objects/", fall_object_index);
-    setposition("man_up" + fall_object_index, 0, 4);
+    loadimg_index("man_up", 45, 40, "absolute", "fall_smallman" + fall_object_index + "_div", -1, "objects/", fall_object_index);
+    setposition("man_up" + fall_object_index, -2, -11);
+    $("#man_up" + fall_object_index).css({zoom: "130%"});
 
-    creatediv("Manleftleg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 100, 5);
-    setposition("Manleftleg" + fall_object_index + "_div", 20, 32);
+    creatediv("Manleftleg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 115, 5);
+    setposition("Manleftleg" + fall_object_index + "_div", 20, 22);
     loadimg_index("Manleftleg", 50, 40, "absolute", "Manleftleg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
     setposition("Manleftleg" + fall_object_index, -30, 2);
 
-    creatediv("ManRightLeg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 100, 5);
-    setposition("ManRightLeg" + fall_object_index + "_div", 22, 32);
+    creatediv("ManRightLeg" + fall_object_index, "fall_smallman" + fall_object_index + "_div", 0, 0, 115, 5);
+    setposition("ManRightLeg" + fall_object_index + "_div", 22, 22);
     loadimg_index("ManRightLeg", 50, 40, "absolute", "ManRightLeg" + fall_object_index + "_div", -1, "objects/", fall_object_index);
     setposition("ManRightLeg" + fall_object_index, -10, 2);
 
@@ -1235,6 +1236,18 @@ function falling_fish(fish_id, x, y, index) {
         if ($('#' + fish_id).position().top > $('#container').height() - $('#' + fish_id).height()) {
             clearInterval(falling_fisher);
             if(fish_id === "fall_eleph" + index + "_div") {
+                walking(fish_id, x, y, index, 300);
+                setTimeout(function() {
+                    let elenum = 0;                   
+                    let eleaudio = setInterval(function() {
+                        if(elenum > 100) {
+                            clearInterval(eleaudio);
+                        }
+                        audioplay("elephant");
+                        elenum++;
+                    }, 50);
+                }, 3000);                
+            } else if (fish_id === "fall_eyefeet" + index + "_div") {
                 walking(fish_id, x, y, index, 300, 1);
             } else {
                 walking(fish_id, x, y, index, 300);
@@ -1254,10 +1267,10 @@ function walking(objects_id, x, y, index, time, sound_key) {
                 move_creature(objects_id, x, y, "fish", index);
             }
             if(objects_id === "fall_eleph" + index + "_div") {
-                move_creature(objects_id, x, y, "eleph", index, sound_key);
+                move_creature(objects_id, x, y, "eleph", index);
             }
             if(objects_id === "fall_eyefeet" + index + "_div") {
-                move_creature(objects_id, x, y, "eyefeet", index);
+                move_creature(objects_id, x, y, "eyefeet", index, sound_key);
             }
         }
         var dx = 0;
